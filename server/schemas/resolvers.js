@@ -1,8 +1,8 @@
-const { Thought } = require('../models');
+const { User, bookSchema } = require('../models');
 
 const resolvers = {
   Query: {
-    thoughts: async () => {
+    user: async () => {
       return Thought.find().sort({ createdAt: -1 });
     },
 
