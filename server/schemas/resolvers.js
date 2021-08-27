@@ -12,7 +12,7 @@ const resolvers = {
   },
 
   Mutation: {
-    addThought: async (parent, { thoughtText, thoughtAuthor }) => {
+    addUser: async (parent, { thoughtText, thoughtAuthor }) => {
       return Thought.create({ thoughtText, thoughtAuthor });
     },
     addComment: async (parent, { thoughtId, commentText }) => {
