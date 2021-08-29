@@ -6,29 +6,25 @@ import { REMOVE_BOOK } from "../utils/mutations";
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
-const SavedBooks = () => {
-  const handleDeleteBook = async (bookId) => {
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      return false;
-    }
-
-    try {
-      const response = await deleteBook(bookId, token);
-
-      if (!response.ok) {
-        throw new Error('something went wrong!');
+  const SavedBooks = () => {
+    const { loading, data } = useQuery(GET_ME);
+    const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+    const userData = data?.me || {};
+    const userDataLength = Object.keys(userData).length;
+    const handleDeleteBook = async (bookId) => {
+      const token = Auth.loggedIn() ? Auth.getToken() : null;
+      if (!token) {return false;}
+      try {const { data } = await removeBook({
+          variables: { bookId },
+        });
+        removeBookId(bookId);
+      } catch (err) {
+        console.error(err);
       }
+    };
+    if (loading) {return <h2>LOADING...</h2>;
+    };
 
-      const updatedUser = await response.json();
-      setUserData(updatedUser);
-      // upon success, remove book's id from localStorage
-      removeBookId(bookId);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   // if data isn't here yet, say so
   if (!userDataLength) {
@@ -69,5 +65,4 @@ const SavedBooks = () => {
     </>
   );
 };
-
 export default SavedBooks;
