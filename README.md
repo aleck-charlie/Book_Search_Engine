@@ -6,6 +6,9 @@ This Google Book Search Engine is an application that allows users to serach for
 
 ![Screenshot2](/client/src/img/booksearch2.jpg)
 
+## Usage
+Find deployed app at https://ac-book-search.herokuapp.com/ 
+
 ## Known Bugs
 Currently the sign-up/log-in is under construction
 
